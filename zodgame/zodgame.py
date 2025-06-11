@@ -155,7 +155,15 @@ def zodgame(cookie_string):
     driver.quit()
     
 if __name__ == "__main__":
-    cookie_string = sys.argv[1]
-    assert cookie_string
+    cookie_strings = sys.argv[1]
+    assert cookie_strings
+
+    # 支持用换行或英文逗号分隔多个 cookie
+    cookie_list = [c.strip() for c in re.split(r'[,\n]', cookie_strings) if c.strip()]
+    for idx, cookie in enumerate(cookie_list, 1):
+        print(f"\n====== 开始账号 {idx} ======")
+        try:
+            zodgame(cookie)
+        except Exception as e:
+            print(f"账号 {idx} 执行失败：{e}")
     
-    zodgame(cookie_string)
